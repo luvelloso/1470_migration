@@ -8,7 +8,7 @@ dft.NUM_FTR,
 dft.TEXTO_FTR,
 dft.DATAENVIO_FTR,
 dft.LOGIN_INC_FTR, 
---dft.TIPO_FTR AS "TIPO_TRAMITE",
+dft.TIPO_FTR AS "TIPO_TRAMITE",
 dft.ID_ARQ_FTR, 
 CASE 
         WHEN dft.TIPO_FTR = 0 THEN 'Normal'
@@ -29,9 +29,24 @@ CASE
         WHEN dft.TIPO_FTR = 15 THEN 'Cancelamento da solicitação de assinatura'
         WHEN dft.TIPO_FTR = 16 THEN 'Cancelamento do trâmite'
         WHEN dft.TIPO_FTR = 17 THEN 'Prolongar prazo do fluxo'
-        ELSE 'Não especificado'
-        END AS novo_tramite_dec,        
---dft.TIPO_FTR,
+        END,        
+        CONCAT (
+        'Tipo de Tramitação:', df.TIPO_FTR,
+        'Descrição: ', dft.TEXTO_FTR,
+        'Disponibilidade de Assinatura: ', dft.DISPONIVELASS_FTR
+        ) as conteudo,
+  
+        
+
+--CONTEUDO
+--PRIORIDADE
+--CODIGO
+--de_usuario_id	
+--de_setor_id	
+--para_usuario_id	
+--para_setor_id	
+--de_contato_id	
+--para_contato_id
 df.DTA_INC_FXO AS "DATA_HORA_RECEBIMENTO", --separar em dt e hr 
 --data_hora_recebimento_gmt
 df.ID_ASS_FXO,
@@ -74,9 +89,7 @@ ON dut.ID_USR_UTR = au.ID_USR
 -- UNIR PRIMEIROS DESPACHOS CONTEUDO 
 LEFT JOIN DOC_FLUXO_TRAMITE dft 
 ON df.ID_FXO = dft.ID_FXO_FTR
---AND dft.NUM_FTR = 1 --numero 1 porque é o despacho inicial
-
-WHERE dft.TIPO_FTR != 0
+AND dft.NUM_FTR = 1 --numero 1 porque é o despacho inicial
 
 -- VERIFICAR CARTA SERVIÇO
 

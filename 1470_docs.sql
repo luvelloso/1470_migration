@@ -44,11 +44,10 @@ CASE
 	WHEN dft.TIPO_FTR = 17 THEN 'Prolongar prazo do fluxo'
 	ELSE 'Não especificado'
 END AS tipo_tramitacao,        
-df.DTA_INC_FXO AS "DATA_HORA_RECEBIMENTO",
---separar em dt e hr 
+df.DTA_INC_FXO AS "DATA_HORA_RECEBIMENTO", --separar em dt e hr 
 df.ID_ASS_FXO,
 da.DESCRICAO_ASS,
-df.ID_UTRDE_FXO ,
+--df.ID_UTRDE_FXO É O MESMO CAMPO ID_ORIGEM
 df.STATUS_FXO,
 df.SIGILOSO_FXO, 
 df.TEMANEXO_FXO, 
@@ -71,9 +70,14 @@ DOC_FLUXO df
 LEFT JOIN DOC_ASSUNTO da 
 ON df.ID_ASS_FXO  = da.ID_ASS 
 
+-- UNIR TRAMITE + TRAMITAÇÃO
+LEFT JOIN tramiteytramitacao dft 
+ON df.ID_FXO = dft.ID_FXO_FTR
+--só quero os despachos que são iniciais.
+
 -- UNIDADE DE TRAMITAÇÃO
 LEFT JOIN DOC_UNIDADE_TRAMITACAO dut
-ON df.ID_UTRDE_FXO = dut.ID_UTR 
+ON dft.ID_ORIGEM = dut.ID_UTR 
 
 -- ORGANOGRAMA TRAMITACAO
 LEFT JOIN DOC_ORGANOGRAMA do 
@@ -84,9 +88,4 @@ LEFT JOIN AUT_USUARIO au
 ON dut.ID_USR_UTR = au.ID_USR 
 
 
--- UNIR TRAMITE + TRAMITAÇÃO
-LEFT JOIN tramiteytramitacao dft 
-ON df.ID_FXO = dft.ID_FXO_FTR
-
-
-WHERE dft.NUM_FTR = 1 --só quero os despachos que são iniciais.
+WHERE dft.NUM_FTR = 1 

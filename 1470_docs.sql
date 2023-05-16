@@ -8,13 +8,19 @@ dft.NUM_FTR,
 dft.TEXTO_FTR,
 dft.DATAENVIO_FTR,
 dft.LOGIN_INC_FTR,
-dft.ID_FTR,
-dft.id_fto, -- apenas para confirmar
-dft.id_ftr_fto, --apenas para confirmar
-dft.ID_ORIGEM,
-dft.ID_DESTINO,
-
-
+dft.id_ftr AS "id_fluxo_tramite2",-- apenas para confirmar
+dut.id_ftr_fto AS "id_fluxo_tramite1",
+dut.ID_FTO AS "id_fluxo_tramitacao",
+dut.ID_UTRDE_FTO, 
+dut.TIPO_UNIDADE_ORIGEM, 
+dut.ID_ORG_UTR_DE AS "org_origem",
+dut.ID_USR_UTR_DE AS "usuario_origem", 
+dut.ID_UTRPARA_FTO, 
+dut.TIPO_UNIDADE_DESTINO, 
+dut.ID_ORG_UTR_PARA AS "org_destino", 
+dut.ID_USR_UTR_PARA AS "usuario_destino", 
+dut.LOGIN_INC_UTR, 
+dut.DTA_INC_UTR,
 -- pessoas envolvidas na tramitação que vou precisar 
 --de_usuario_id,
 --de_setor_id,
@@ -58,34 +64,35 @@ df.QTDTRAMITE_FXO,
 df.LOGIN_INC_FXO,
 df.DTA_INC_FXO ,
 df.LOGIN_ALT_FXO,
-df.DTA_ALT_FXO,
-dut.ID_UTR,
-dut.ID_ORG_UTR,
-do.NOME_ORG,
-au.LOGIN_USR
+df.DTA_ALT_FXO
 FROM
 DOC_FLUXO df
 
 -- ASSUNTO
+
 LEFT JOIN DOC_ASSUNTO da 
 ON df.ID_ASS_FXO  = da.ID_ASS 
 
--- UNIR TRAMITE + TRAMITAÇÃO
-LEFT JOIN tramiteytramitacao dft 
-ON df.ID_FXO = dft.ID_FXO_FTR
+-- TRAMITES (apenas com num_ftr = 1, que sao os primeiros tramites)
 --só quero os despachos que são iniciais.
+LEFT JOIN DOC_FLUXO_TRAMITE dft 
+ON df.ID_FXO = dft.ID_FXO_FTR
 
--- UNIDADE DE TRAMITAÇÃO
-LEFT JOIN DOC_UNIDADE_TRAMITACAO dut
-ON dft.ID_ORIGEM = dut.ID_UTR 
+-- TRAMITAÇÃO  + UNIDADE DE TRAMITAÇÃO
+LEFT JOIN TRAMITACAO_ORG_USR2 dut
+ON dft.ID_FTR = dut.ID_FTR_FTO 
 
 -- ORGANOGRAMA TRAMITACAO
-LEFT JOIN DOC_ORGANOGRAMA do 
-ON dut.ID_ORG_UTR = do.ID_ORG 
+--LEFT JOIN DOC_ORGANOGRAMA do 
+--ON dut.ID_ORG_UTR = do.ID_ORG 
 
 -- USUARIO TRAMITACAO
-LEFT JOIN AUT_USUARIO au  
-ON dut.ID_USR_UTR = au.ID_USR 
-
+--LEFT JOIN AUT_USUARIO au  
+--ON dut.ID_USR_UTR = au.ID_USR 
 
 WHERE dft.NUM_FTR = 1 
+
+
+
+
+

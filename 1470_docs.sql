@@ -1,5 +1,6 @@
 SELECT 
-df.ID_FXO AS "ID",
+df.ID_FXO,
+dft.id_ftr,
 da.ID_TFX_ASS AS "ID_FLUXO",
 df.NUMERO_FXO AS "NUM",
 df.ANO_FXO AS "ANO_DOCUMENTO",
@@ -8,9 +9,8 @@ dft.NUM_FTR,
 dft.TEXTO_FTR,
 dft.DATAENVIO_FTR,
 dft.LOGIN_INC_FTR,
-dft.id_ftr AS "id_fluxo_tramite2",-- apenas para confirmar
-dut.id_ftr_fto AS "id_fluxo_tramite1",
-dut.ID_FTO AS "id_fluxo_tramitacao",
+dut.id_ftr_fto,
+dut.ID_FTO AS "ID_DESPACHO_DEXPARA",
 dut.ID_UTRDE_FTO, 
 dut.TIPO_UNIDADE_ORIGEM, 
 dut.ID_ORG_UTR_DE AS "org_origem",
@@ -70,7 +70,7 @@ DOC_FLUXO df
 
 -- ASSUNTO
 
-LEFT JOIN DOC_ASSUNTO da 
+LEFT JOIN DOC_ASSUNTO da  
 ON df.ID_ASS_FXO  = da.ID_ASS 
 
 -- TRAMITES (apenas com num_ftr = 1, que sao os primeiros tramites)
@@ -78,21 +78,9 @@ ON df.ID_ASS_FXO  = da.ID_ASS
 LEFT JOIN DOC_FLUXO_TRAMITE dft 
 ON df.ID_FXO = dft.ID_FXO_FTR
 
--- TRAMITAÇÃO  + UNIDADE DE TRAMITAÇÃO
-LEFT JOIN TRAMITACAO_ORG_USR2 dut
+-- TRAMITAÇÃO  + UNIDADE DE TRAMITAÇÃO (tabela + importante)
+LEFT JOIN TRAMITACAO_ORG_USR3 dut
 ON dft.ID_FTR = dut.ID_FTR_FTO 
 
--- ORGANOGRAMA TRAMITACAO
---LEFT JOIN DOC_ORGANOGRAMA do 
---ON dut.ID_ORG_UTR = do.ID_ORG 
-
--- USUARIO TRAMITACAO
---LEFT JOIN AUT_USUARIO au  
---ON dut.ID_USR_UTR = au.ID_USR 
-
-WHERE dft.NUM_FTR = 1 
-
-
-
-
+WHERE dft.NUM_FTR = 1 -- restringe p/ apenas a emissão pai. 
 

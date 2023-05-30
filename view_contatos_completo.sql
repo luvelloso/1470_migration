@@ -1,3 +1,4 @@
+CREATE VIEW contatos_completo AS
 SELECT DISTINCT 
 au.ID_USR AS "id",
 dp.nome_pes AS "nome_razao_social",
@@ -72,3 +73,6 @@ AND
 au.id_pes_usr IS NOT NULL
 AND 
 au.id_usr <> 5 --esse usuario era bloqueado, sem nome
+
+
+

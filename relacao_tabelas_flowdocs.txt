@@ -1,0 +1,26 @@
+DOCUMENTOS 
+
+DOC_FLUXO: emissao pai
+DOC_FLUXO_TRAMITE: conteudo do tramite (precisa filtrar por num_ftr = 1 para que o conteudo seja da primeira emissao, o resto é tudo despacho. 
+DOC_FLUXO_TRAMITACAO: de x para das tramitações. também necessário filtrar porque há vários registros duplicados no caso que tenha sido enviado pra mais de 1 setor/pessoa. 
+DOC_ASSUNTO: tabela assuntos da base. 
+DOC_TIPOFLUXO: tipo do fluxo 
+DOC_FLUXO_TRAMITE_ARQUIVO: Nome dos anexos de cada tramitação (despacho e emissao pai) 
+
+SETORES
+DOC_UNIDADE_TRAMITACAO: cada unidade é referente a um setor ou um usuário. a tabela de de x para precisa ser vinculada a essa para saber quem são.
+DOC_ORGANOGRAMA: tabela de setores
+
+USUARIOS INTERNOS E EXTERNOS
+AUT_USUARIO: lista de usuarios internos, externos e de integração
+DOC_PESSOA: cada registro do aut_usuario vai ter um doc pessoa correspondente. aí é onde vamos encontrar os dados específicos do usuario/contato.
+DOC_PESSOA_FISICA: mais dados de pessoa física. 
+DOC_PESSOA_JURIDICA: dados de pessoa jurídica.
+DOC_PESSOA_CONTATO: contato do usuario interno e externo (tanto telefone quanto email) 
+DOC_PESSOA_ENDERECO: endereço cadastrado de cada pessoa.
+DOC_TIPOLOGRADOURO: tipo de endereço
+DOC_TIPOORGANOGRAMA: tipo de organograma
+DOC_BAIRRO: tabela bairros 
+DOC_ENDERECO: tabela endereços 
+DOC_ESTADO: tabela estados 
+DOC_LOGRADOURO: tabela logradouros

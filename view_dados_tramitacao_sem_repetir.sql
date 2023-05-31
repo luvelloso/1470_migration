@@ -1,0 +1,11 @@
+
+
+CREATE VIEW dados_tramitacao_sem_repetir as
+SELECT *
+FROM DADOS_TRAMITACAO dt
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM DADOS_TRAMITACAO dt2
+    WHERE dt2.ID_FTR_FTO = dt.ID_FTR_FTO
+    AND dt2.ID_FTO < dt.ID_FTO 
+)
